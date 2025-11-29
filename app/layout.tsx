@@ -11,7 +11,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "LUXE BOUTIQUE | Curated Luxury Fashion",
   description: "Discover curated luxury fashion for the modern woman. Timeless elegance meets contemporary design.",
-  generator: "v0.app",
   icons: {
     icon: [
       {
