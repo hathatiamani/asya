@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import gsap from "gsap"
 
-const newProducts = [
+const products = [
   { id: 1, name: 'Coat "Maxi"', price: 8450, image: "https://i.pinimg.com/1200x/86/14/d6/8614d69983c685f04ce68da54f357866.jpg" },
   { id: 2, name: 'Pants "Bon"', price: 4500, image: "https://i.pinimg.com/1200x/80/50/0b/80500bf48ef0d30df67d0b1249407785.jpg" },
   { id: 3, name: 'Jacket "Tex"', price: 7800, image: "https://i.pinimg.com/1200x/16/36/61/163661867d8aa1bf6ee17be88052cb94.jpg" },
@@ -14,60 +14,60 @@ const newProducts = [
   { id: 6, name: 'Jacket "Deni"', price: 6700, image: "https://i.pinimg.com/1200x/d3/9f/fa/d39ffaadd70eff10ebae6daa60fb13e4.jpg" },
   { id: 7, name: 'Dress "Noir"', price: 9200, image: "https://i.pinimg.com/736x/f0/a7/08/f0a7089e50ae128e5d40f9007ea617df.jpg" },
   { id: 8, name: 'Shirt "Ruby"', price: 3800, image: "https://i.pinimg.com/736x/a4/cf/07/a4cf07a7dd1bf842a06ecdbdd11f9368.jpg" },
+ { id: 9, name: 'Top "Sirène"', price: 5900, image: "https://i.pinimg.com/1200x/cb/af/af/cbafaf961fb3971db16b82284dfc36e8.jpg" },
+  { id: 10, name: 'Set "Jeans"', price: 13900, image: "https://i.pinimg.com/736x/3a/3a/c5/3a3ac587a25386edb844fb5eba280362.jpg" },
+  { id: 11, name: 'T-shirt "Pink"', price: 3500, image: "https://i.pinimg.com/1200x/d0/76/8f/d0768fb372eea542d554066c1bcd0216.jpg" },
+  { id: 12, name: 'Set "Gilet"', price: 11900, image: "https://i.pinimg.com/736x/a4/cf/07/a4cf07a7dd1bf842a06ecdbdd11f9368.jpg" },
+  { id: 13, name: 'Skirt "Long"', price: 7500, image: "https://i.pinimg.com/1200x/a5/0f/b9/a50fb92ad8b1e1d12d40f396f60c3c3d.jpg" },
+  { id: 14, name: 'Coat "77"', price: 15500, image: "https://i.pinimg.com/736x/49/57/b0/4957b067237c2eec80b09c45a349bf1f.jpg" },
+  { id: 15, name: 'Jacket "Cozy"', price: 9400, image: "https://i.pinimg.com/1200x/fb/0b/dd/fb0bddbcc797e99ae527acaf621dc528.jpg" },
+  { id: 16, name: 'Top "Way"', price: 2900, image: "https://i.pinimg.com/1200x/9d/b3/99/9db399b3494428f3a047788414e139dc.jpg" },
 ]
 
-export default function HomePage() {
+export default function ShopPage() {
+  const containerRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Overlay animation
       gsap.to(overlayRef.current, {
         scaleY: 0,
         transformOrigin: "top",
-        duration: 1.5,
-        ease: "power4.inOut",
-        delay: 0.5,
-      })
-
-      // Hero content animation
-      gsap.from(".hero-text", {
-        y: 100,
-        opacity: 0,
         duration: 1.2,
-        ease: "power3.out",
-        delay: 1.2,
-        stagger: 0.1,
+        ease: "power4.inOut",
+        delay: 0.3,
       })
 
-      // Brand name animation
-      gsap.from(".brand-large", {
-        y: 80,
-        opacity: 0,
-        duration: 1.4,
-        ease: "power3.out",
-        delay: 1.5,
-      })
-
-      // Products animation
-      gsap.from(".product-item", {
+      // Header animation
+      gsap.from(".page-title", {
         y: 60,
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-        delay: 1.8,
-        stagger: 0.1,
+        delay: 0.8,
       })
 
-      // Footer sections animation
-      gsap.from(".footer-section", {
+      // Products stagger animation
+      gsap.from(".product-card", {
         y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 1,
+        stagger: {
+          amount: 0.8,
+          grid: [4, 4],
+          from: "start",
+        },
+      })
+
+      // Footer animation
+      gsap.from(".shop-footer", {
+        y: 30,
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-        delay: 2,
-        stagger: 0.2,
+        delay: 1.5,
       })
     })
 
@@ -75,11 +75,10 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-white text-black">
-      {/* Overlay */}
+    <div ref={containerRef} className="relative min-h-screen bg-white text-black">
       <div ref={overlayRef} className="fixed inset-0 bg-black z-50" />
 
-      {/* Navigation */}
+       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-white">
         <div className="flex items-center justify-between px-6 py-4 text-xs tracking-wide">
           <div className="flex items-center gap-8">
@@ -102,96 +101,50 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="pt-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          {/* Hero Image */}
-          <div className="relative h-[70vh] bg-black overflow-hidden">
-            <Image src="https://i.pinimg.com/736x/f2/3b/53/f23b53eee64f34ab3390e99abfbd47cf.jpg" alt="Hero fashion" fill className="object-cover" />
-            <div className="absolute inset-0 flex items-end p-8">
-              <div className="text-white">
-                <h1 className="hero-text text-4xl md:text-5xl font-light leading-tight">Style philosophy</h1>
-                <h1 className="hero-text text-4xl md:text-5xl font-light leading-tight">based on the</h1>
-                <h1 className="hero-text text-4xl md:text-5xl font-light leading-tight">harmony</h1>
-                <Link
-                  href="/shop"
-                  className="hero-text inline-block mt-6 text-sm border-b border-white pb-1 hover:text-pink-300 hover:border-pink-300 transition-colors"
-                >
-                  About Us
-                </Link>
-              </div>
-            </div>
+      {/* Page Content */}
+      <main className="pt-20 px-6">
+        {/* Page Header */}
+        <div className="py-8 border-b border-black/10">
+          <h1 className="page-title text-6xl md:text-8xl font-extralight text-pink-500 tracking-tight">Shop</h1>
+          <div className="flex items-center justify-between mt-4">
+            <p className="text-sm text-black/60">/catalog</p>
+            <button className="flex items-center gap-2 text-sm hover:text-pink-500 transition-colors">
+              Filter
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
           </div>
-          {/* Hero Right - Second Image */}
-          <div className="relative h-[70vh] bg-neutral-100 overflow-hidden hidden lg:block">
-            <Image src="https://i.pinimg.com/1200x/6a/b0/6c/6ab06cc3d9aa8adaa1a467cead8fa028.jpg" alt="Fashion model" fill className="object-cover" />
-          </div>
-        </div>
-      </section>
-
-      {/* Brand Name Large */}
-     <section className="py-8 md:py-12 lg:py-16 px-4 sm:px-6 border-b border-black/10">
-  <h2 className="brand-large text-[4rem] xs:text-[5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-extralight tracking-tight leading-none">
-    asya<span className="text-pink-500">/</span>se
-  </h2>
-</section>
-
-      {/* New In Section */}
-      <section className="px-6 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h3 className="text-sm tracking-wide">New In</h3>
-          <span className="text-sm text-black/50">{newProducts.length} ITEMS</span>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
-          {newProducts.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`} className="product-item group">
-              <div className="relative aspect-3/4 bg-neutral-100 overflow-hidden mb-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 py-8">
+          {products.map((product) => (
+            <Link key={product.id} href={`/product/${product.id}`} className="product-card group">
+              <div className="relative aspect-[3/4] bg-neutral-100 overflow-hidden mb-3">
                 <Image
-                  src={product.image}
+                  src={product.image || "/placeholder.svg"}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <p className="text-xs text-black/60">{product.name}</p>
-              <p className="text-sm mt-1">{product.price.toLocaleString()} DA</p>
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-xs text-black/60">{product.name}</p>
+                <p className="text-xs whitespace-nowrap">{product.price.toLocaleString()} DA</p>
+              </div>
             </Link>
           ))}
         </div>
-      </section>
 
-      {/* Categories Section */}
-      <section className="bg-black text-white py-16 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="relative h-[50vh] overflow-hidden">
-            <Image src="https://i.pinimg.com/736x/62/04/51/620451fa7d00dd2027f5b6444e6b98a8.jpg" alt="Category" fill className="object-cover" />
-          </div>
-          <div className="flex flex-col justify-center">
-            <nav className="space-y-4">
-              <Link href="/shop" className="block text-2xl hover:text-pink-400 transition-colors">
-                Catalog
-              </Link>
-              <Link href="/shop" className="block text-2xl hover:text-pink-400 transition-colors">
-                Limited
-              </Link>
-              <Link href="/shop" className="block text-2xl hover:text-pink-400 transition-colors">
-                Brand
-              </Link>
-              <Link href="/shop" className="block text-2xl hover:text-pink-400 transition-colors">
-                Bestsellers
-              </Link>
-              <Link href="/shop" className="block text-2xl hover:text-pink-400 transition-colors">
-                Aw Collection 25
-              </Link>
-            </nav>
-          </div>
+        {/* Load More */}
+        <div className="flex justify-center py-8 border-t border-black/10">
+          <button className="text-sm hover:text-pink-500 transition-colors">More</button>
         </div>
-      </section>
+      </main>
 
       {/* Newsletter Section */}
-      <section className="footer-section py-16 px-6 border-b border-black/10">
+      <section className="shop-footer py-16 px-6 border-t border-black/10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
             <h3 className="text-3xl md:text-4xl font-light leading-tight">
@@ -216,7 +169,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="footer-section py-12 px-6">
+      <footer className="shop-footer py-12 px-6 border-t border-black/10">
         <div className="mb-8">
           <h4 className="text-2xl md:text-3xl font-light">Shop asya/se</h4>
         </div>
